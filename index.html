@@ -1,0 +1,175 @@
+<html>
+<head>
+</head>
+<body style="background-color:#faf4f6;">
+   <div><textarea id="txt"></textarea>
+    <br><button onclick="generate(event)">Generate Tree</button></div> 
+<canvas height="1000" width="1000" id="canv" src="">
+    
+</canvas>
+</body>
+
+
+<script>
+    var generate=(event)=>{
+    event.preventDefault();
+    var canvas=document.getElementById('canv');
+    var ctx=canvas.getContext('2d');
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    var graph=[];
+    var text=document.getElementById("txt").value;
+    if(text){
+    let rows=text.split('\n');
+    let adj=[];
+    rows.forEach(element => {
+        if(element){
+        let x=parseInt(element.split(" ")[0]);
+        let y=parseInt(element.split(" ")[1]);
+        adj.push([x,y]);}
+    });
+    graph=adj;
+    console.log(adj);
+    }
+    var parMap=new Map();
+    
+    var createGraph=(g)=>{
+        var adj=[];
+        for(let i=0;i<=g.length *2;i++){
+            adj.push([]);
+        }
+        console.log(g.length);
+        for(let i=0;i<g.length;i++)
+        {
+            adj[g[i][0]].push(g[i][1]);
+            adj[g[i][1]].push(g[i][0]);
+        }
+        return adj;
+    };
+    //Creating a graph
+    var g=createGraph(graph);
+    //Draw a Circle
+    var drawCircle=(x,y,r,v)=>{
+        ctx.beginPath();
+        ctx.arc(y,x,1.5*r,0, 2 * Math.PI);
+        ctx.stroke();
+        ctx.strokeStyle="#000000"
+        ctx.fillStyle = "#814681";
+        ctx.fill();
+        ctx.fillStyle = "white";
+        ctx.font = "bold 18px Arial";
+        ctx.fillText(v, y-8, x+8);
+        ctx.fillStyle = "#814681";
+    };
+    //Draw a Line
+    var drawLine=(x1,y1,x2,y2,r=16)=>{
+        ctx.strokeStyle = '#881414';
+        ctx.moveTo(x1,y1+24);
+        ctx.lineTo(x2,y2-24);
+        ctx.stroke();
+        ctx.strokeStyle="#00002"
+    };
+    //Height Calculation
+    var heightCalc=(g,par=0,k=1)=>{
+        let max=1;
+        for(let i=0;i<g[k].length;i++)
+        {
+            
+            if(par!=g[k][i]){
+                parMap.set(g[k][i],k);
+                max=Math.max(max,1+heightCalc(g,k,g[k][i]));
+            }
+        }
+        return max;
+    };
+    //Calculate height
+    var height=heightCalc(g);
+    console.log(height);
+    //create a level map
+    var levmap=[];
+    for(let i=0;i<=height+3;i++)
+        levmap.push([]);
+    console.log(levmap);
+    //Breadth First Traversal to find out the level and position
+    var bfs=(g)=>{
+        let q=[[1,1]];
+        levmap[1].push(1);
+        vis=[];
+        for(let i=0;i<1002;i++)
+        vis.push(false);
+        while(q.length!=0)
+        {
+            let u=q[0];
+            q.shift();
+            vis[u[0]]=true;
+            console.log(g[u[0]]);
+            for(let i=0;i<g[u[0]].length;i++)
+            {
+                if(!vis[g[u[0]][i]])
+                {
+                    q.push([g[u[0]][i],u[1]+1]);
+                    levmap[(u[1]+1)].push(g[u[0]][i]);
+                }
+            }
+        }
+    };
+    bfs(g);
+    var maxWidth=((levmap)=>{
+        let max=1;
+        levmap.forEach((ele)=>{
+            max=Math.max(max,ele.length);
+        });
+        return max;
+    })(levmap);
+    var levelHeight=Math.ceil(1000/(height+1));
+    var maxWidt=Math.ceil(1000/(maxWidth+1));
+    if(levelHeight<100)
+            {
+                levelHeight=100;
+                canvas.height=100*(height+2)+200;
+            }
+    if(maxWidt<42)
+    {
+                canvas.width=42*(maxWidth+3)+200;
+    }
+    console.log("levelHeight",levelHeight);
+    var nodeCord=[];
+    for(let i=0;i<1002;i++)
+        nodeCord.push([]);
+    var drawNodes=()=>{
+        console.log("height",height);
+        for(let level=1;level<=height;level++)
+        {
+            let totNodes=levmap[level].length;
+            let levelWidth=Math.ceil(canvas.width/(totNodes+2));
+            console.log("levelWidth",levelWidth);
+            console.log(level,totNodes);
+            for(let pos=1;pos<=totNodes;pos++)
+            {
+                nodeCord[levmap[level][pos-1]].push(level*levelHeight);
+                nodeCord[levmap[level][pos-1]].push(levelWidth*pos);
+                console.log(level*levelHeight,levelWidth*pos);
+                drawCircle(level*levelHeight,levelWidth*pos,18,levmap[level][pos-1]);
+            }
+        }
+    };
+    drawNodes();
+    //draw edges
+    var drawEdges=(g,par=0,k=1)=>{
+        for(let i=0;i<g[k].length;i++)
+        {
+            if(g[k][i]!=par)
+            {
+                drawLine(nodeCord[k][1],nodeCord[k][0],nodeCord[g[k][i]][1],nodeCord[g[k][i]][0]);
+                drawEdges(g,k,g[k][i]);     
+            }
+        }
+    };
+    drawEdges(g);
+      var url = canvas.toDataURL();
+        var newImg = document.createElement("img"); // create img tag
+        newImg.src = url;
+        canvas.setAttribute("src", url);
+    }
+
+    </script>
+</html>
