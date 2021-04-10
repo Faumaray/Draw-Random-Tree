@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.*?>
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<Scene xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.SecondaryController">
+    <AnchorPane prefHeight="889.0" prefWidth="1218.0">
+      <children>
+         <SplitPane dividerPositions="0.14023372287145242" layoutX="238.0" layoutY="279.0" orientation="VERTICAL" prefHeight="601.0" prefWidth="901.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+           <items>
+             <AnchorPane maxHeight="100.0" minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                  <children>
+                     <ToolBar layoutX="386.0" layoutY="5.0" prefHeight="81.0" prefWidth="899.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <items>
+                           <Button fx:id="Show" defaultButton="true" mnemonicParsing="false" onAction="#Show" prefHeight="58.0" prefWidth="176.0" text="Show" />
+                           <Button fx:id="Back" defaultButton="true" mnemonicParsing="false" onAction="#Back" prefHeight="58.0" prefWidth="176.0" text="Back" />
+                           <ComboBox fx:id="trees" prefHeight="50.0" prefWidth="517.0" promptText="Choose Tree" />
+                        </items>
+                     </ToolBar>
+                  </children>
+               </AnchorPane>
+             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                  <children>
+                     <SplitPane dividerPositions="0.4294117647058823" layoutX="276.0" layoutY="200.0" orientation="VERTICAL" prefHeight="781.0" prefWidth="1216.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                       <items>
+                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                              <children>
+                                 <BarChart id="histogram" fx:id="histogram" layoutX="223.0" layoutY="43.0" minWidth="50.0" prefHeight="313.0" prefWidth="1214.0" title="Histogram" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                   <xAxis>
+                                     <CategoryAxis side="BOTTOM" fx:id="xAxis" />
+                                   </xAxis>
+                                   <yAxis>
+                                     <NumberAxis fx:id="yAxis" side="LEFT" />
+                                   </yAxis>
+                                 </BarChart>
+                              </children>
+                           </AnchorPane>
+                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                              <children>
+                                 <AnchorPane fx:id="anchorPane" layoutX="305.0" layoutY="102.0" prefHeight="252.0" prefWidth="897.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <children>
+                                       <ImageView fx:id="image" fitHeight="514.0" fitWidth="591.0" pickOnBounds="true" preserveRatio="true" />
+                                    </children>
+                                 </AnchorPane>
+                              </children>
+                           </AnchorPane>
+                       </items>
+                     </SplitPane>
+                  </children>
+               </AnchorPane>
+           </items>
+         </SplitPane>
+      </children></AnchorPane>
+</Scene>
