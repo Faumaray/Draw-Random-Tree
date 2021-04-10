@@ -354,10 +354,10 @@ public class PrimaryController {
                 WebElement canvas = driver.findElement(By.id("canv"));
                 TimeUnit.SECONDS.sleep(1);
                 Tree<Integer> tree = new Tree<>(generateTree(maxChilds, maxNodes));
-                if(tree.size() == 1 || tree.size() == 0)
+                /*if(tree.size() == 1 || tree.size() == 0)
                 {
                     continue;
-                }
+                }*/
                 tree.setName("№" + count);
                 trees.add(tree);
                 (new WebDriverWait(driver, 10)).until(new ExpectedCondition<Boolean>() {
