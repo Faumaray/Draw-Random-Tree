@@ -8,7 +8,8 @@ import com.Queue.SimpleQueue;
  * @param <T> Any class type
  */
 public class Tree<T> {
-    public String name;
+    public int number;
+    public String name = "№" + number;
     private Node<T> root;
     public int[] counts = new int[6];
     public double alpha;
@@ -35,6 +36,12 @@ public class Tree<T> {
     {
         this.name = name;
     }
+    public void setNumber(Integer num)
+    {
+        this.number = num;
+    }
+    public String getName(){return name;}
+    public int getNumber() {return number;}
     /**
      * Get the root node of the tree
      *

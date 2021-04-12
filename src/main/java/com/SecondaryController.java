@@ -6,6 +6,12 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import com.Tree.*;
+
+import javafx.util.StringConverter;
+import org.abego.treelayout.NodeExtentProvider;
+import org.abego.treelayout.TreeForTreeLayout;
+import org.abego.treelayout.TreeLayout;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -92,7 +98,20 @@ public class SecondaryController {
         image.setPreserveRatio(false);
         image.fitWidthProperty().bind(anchorPane.widthProperty());
         image.fitHeightProperty().bind(anchorPane.heightProperty());
-        trees.setItems(PrimaryController.trees);
+        StringConverter<Tree<Integer>> converter = new
+                StringConverter<Tree<Integer>>(){
+            @Override
+                    public String toString(Tree<Integer> object)
+            {
+                return object.name;
+            }
 
+                    @Override
+                    public Tree<Integer> fromString(String string) {
+                        return null;
+                    }
+                };
+        trees.setConverter(converter);
+        trees.setItems(PrimaryController.trees);
     }
 }

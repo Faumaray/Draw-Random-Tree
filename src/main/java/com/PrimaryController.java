@@ -4,6 +4,7 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
+import java.util.Comparator;
 import java.util.Random;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -12,7 +13,6 @@ import java.util.concurrent.TimeUnit;
 import javax.imageio.ImageIO;
 import javax.xml.bind.DatatypeConverter;
 
-import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.control.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
@@ -72,11 +72,14 @@ public class PrimaryController {
     @FXML
     private Button goToTreeAndHisto;
 
+    Comparator<Tree<Integer>> comparator = Comparator.comparing(Tree<Integer>::getName);
+
     @FXML
     void generate(ActionEvent event) 
     {
-        trees = FXCollections.observableArrayList();;
+        trees = FXCollections.observableArrayList();
         generate(browser.getValue(), maxChild.getValue(), maxNode.getValue(), count.getValue());
+
     }
 
     @FXML
@@ -90,6 +93,7 @@ public class PrimaryController {
             alert.showAndWait();
         }
         else {
+            trees.sort(comparator);
             Stage stage;
             Scene scene;
             stage = (Stage) goToTreeAndHisto.getScene().getWindow();
@@ -101,6 +105,7 @@ public class PrimaryController {
     }
     @FXML
     void goToTreeAndHisto(ActionEvent event) throws IOException {
+        trees.sort(comparator);
         Stage stage;
         Scene scene;
         stage = (Stage) goToTreeAndHisto.getScene().getWindow();
@@ -396,7 +401,6 @@ public class PrimaryController {
                 count++;
                 tree.calccounts();
                 tree.calculateAlpha();
-
         }
         driver.close();
         driver.quit();
