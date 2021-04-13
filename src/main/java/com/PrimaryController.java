@@ -100,13 +100,11 @@ public class PrimaryController {
     @FXML
     void generate(ActionEvent event) throws InterruptedException {
         generate("NonStrict",browser.getValue(), maxChild.getValue(), maxNode.getValue(), count.getValue());
-        App.globalcount += count.getValue();
     }
 
     @FXML
     void generateStrict(ActionEvent event) throws InterruptedException {
         generate("Strict",browser.getValue(), maxChild.getValue(), maxNode.getValue(), count.getValue());
-        App.globalcount += count.getValue();
     }
 
     @FXML
@@ -271,14 +269,11 @@ public class PrimaryController {
             } 
         } 
     }
-        public void generatefor4(String regime,int number,WebDriver[] drivers, int maxChilds, int maxNodes) throws InterruptedException
-        {
-            CountDownLatch latch = new CountDownLatch(4);
+        public void generatefor4(String regime,int number,WebDriver[] drivers, int maxChilds, int maxNodes) {
         ExecutorService executor = Executors.newSingleThreadExecutor();
         executor.submit(() -> {
             try {
                 printFiles(regime,1 ,number/4, drivers[0],maxChilds,maxNodes);
-                latch.countDown();
             } catch (InterruptedException | IOException e) {
                 e.printStackTrace();
             }
@@ -287,7 +282,6 @@ public class PrimaryController {
         executor2.submit(() -> {
             try {
                 printFiles(regime,(number/4)+1 ,(number/4)*2, drivers[1] ,maxChilds,maxNodes);
-                latch.countDown();
             } catch (InterruptedException | IOException e) {
                 e.printStackTrace();
             }
@@ -296,7 +290,6 @@ public class PrimaryController {
         executor3.submit(() -> {
             try {
                 printFiles(regime,((number/4)*2)+1 ,(number/4)*3, drivers[2],maxChilds,maxNodes);
-                latch.countDown();
             } catch (InterruptedException | IOException e) {
                 e.printStackTrace();
             }
@@ -305,25 +298,21 @@ public class PrimaryController {
         executor4.submit(() -> {
             try {
                 printFiles(regime,((number/4)*3) + 1 ,number, drivers[3],maxChilds,maxNodes);
-                latch.countDown();
             } catch (InterruptedException | IOException e) {
                 e.printStackTrace();
             }
         });
-            latch.await();
         executor.shutdown();
         executor2.shutdown();
         executor3.shutdown();
         executor4.shutdown();
 
     }
-        public void generatefor3(String regime,int number ,WebDriver[] drivers, int maxChilds, int maxNodes) throws InterruptedException {
-        CountDownLatch latch = new CountDownLatch(3);
+        public void generatefor3(String regime,int number ,WebDriver[] drivers, int maxChilds, int maxNodes) {
         ExecutorService executor = Executors.newSingleThreadExecutor();
         executor.submit(() -> {
             try {
                 printFiles(regime,1 ,number/3, drivers[0],maxChilds,maxNodes);
-                latch.countDown();
             } catch (InterruptedException | IOException e) {
                 e.printStackTrace();
             }
@@ -332,7 +321,6 @@ public class PrimaryController {
         executor2.submit(() -> {
             try {
                 printFiles(regime,(number/3)+1 ,(number/3)*2, drivers[1] ,maxChilds,maxNodes);
-                latch.countDown();
             } catch (InterruptedException | IOException e) {
                 e.printStackTrace();
             }
@@ -341,24 +329,20 @@ public class PrimaryController {
         executor3.submit(() -> {
             try {
                 printFiles(regime,((number/3)*2)+1 ,number, drivers[2],maxChilds,maxNodes);
-                latch.countDown();
             } catch (InterruptedException | IOException e) {
                 e.printStackTrace();
             }
         });
-        latch.await();
         executor.shutdown();
         executor2.shutdown();
         executor3.shutdown();
 
     }
         public void generatefor2(String regime,int number ,WebDriver[] drivers, int maxChilds, int maxNodes) throws InterruptedException {
-        CountDownLatch latch = new CountDownLatch(2);
         ExecutorService executor = Executors.newSingleThreadExecutor();
                 executor.submit(() -> {
                     try {
                         printFiles(regime,1 ,number/2, drivers[0],maxChilds,maxNodes);
-                        latch.countDown();
                     } catch (InterruptedException | IOException e) {
                         e.printStackTrace();
                     }
@@ -367,27 +351,22 @@ public class PrimaryController {
                 executor2.submit(() -> {
                     try {
                         printFiles(regime,(number/2)+1 ,number, drivers[1],maxChilds,maxNodes);
-                        latch.countDown();
                     } catch (InterruptedException | IOException e) {
                         e.printStackTrace();
                     }
                 });
-        latch.await();
         executor.shutdown();
         executor2.shutdown();
     }
-        public void generatefor1(String regime,int number , WebDriver[] driver, int maxChilds, int maxNodes) throws InterruptedException {
-        CountDownLatch latch = new CountDownLatch(1);
+        public void generatefor1(String regime,int number , WebDriver[] driver, int maxChilds, int maxNodes){
         ExecutorService executor = Executors.newSingleThreadExecutor();
                 executor.submit(() -> {
                     try {
                         printFiles(regime,1 ,number, driver[0],maxChilds,maxNodes);
-                        latch.countDown();
                     } catch (InterruptedException | IOException e) {
                         e.printStackTrace();
                     }
                 });
-                latch.await();
                 executor.shutdown();
     }
         public void printFiles(String regime ,int number,int max, WebDriver driver, int maxChilds, int maxNodes) throws InterruptedException, IOException
@@ -448,10 +427,11 @@ public class PrimaryController {
                 BufferedImage bufferedImage = ImageIO.read(new ByteArrayInputStream(imageBytes));
                 int histSize = maxNodes + maxChilds;
                 float[] range = {0, histSize};
-                File outfile = new File(".\\OutFiles\\" + "№" + count + ".png");
+                File outfile = new File(".\\OutFiles\\" + tree.getName() + ".png");
                 ImageIO.write(bufferedImage, "png", outfile);
                 driver.navigate().refresh();
                 count++;
+                App.globalcount++;
                 tree.calccounts();
                 tree.calculateAlpha();
         }
