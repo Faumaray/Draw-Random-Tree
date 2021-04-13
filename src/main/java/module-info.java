@@ -12,7 +12,6 @@ module com {
     requires org.seleniumhq.selenium.opera_driver;
     requires org.seleniumhq.selenium.support;
     requires org.apache.commons.io;
-    requires org.abego.treelayout.core;
 
     opens com to javafx.fxml;
     exports com;

@@ -13,14 +13,16 @@ public class Tree<T> {
     private Node<T> root;
     public int[] counts = new int[6];
     public double alpha;
+    public int order;
     
     /**
      * Initialize a tree with the specified root node.
      *
      * @param root The root node of the tree
      */
-    public Tree(Node<T> root) {
+    public Tree(Node<T> root, int order) {
         this.root = root;
+        this.order = order;
     }
 
     /**
@@ -50,6 +52,7 @@ public class Tree<T> {
     public Node<T> getRoot() {
         return root;
     }
+
 
     /**
      * Set the root node of the tree. Replaces existing root node.
@@ -89,8 +92,8 @@ public class Tree<T> {
      * @return the number of descendants
      */
     public int getNumberOfDescendants(Node<T> node) {
-        int n = node.getChildren().size();
-        for (Node<T> child : node.getChildren())
+        int n = node.getChildrenList().size();
+        for (Node<T> child : node.getChildrenList())
             n += getNumberOfDescendants(child);
 
         return n;
@@ -103,7 +106,7 @@ public class Tree<T> {
             return true;
 
         else {
-            for (Node<T> child : node.getChildren())
+            for (Node<T> child : node.getChildrenList())
                 if (find(child, keyNode))
                     res = true;
         }
@@ -137,13 +140,13 @@ public class Tree<T> {
 
     private void buildPreOrder(Node<T> node, ArrayList<Node<T>> preOrder) {
         preOrder.add(node);
-        for (Node<T> child : node.getChildren()) {
+        for (Node<T> child : node.getChildrenList()) {
             buildPreOrder(child, preOrder);
         }
     }
 
     private void buildPostOrder(Node<T> node, ArrayList<Node<T>> postOrder) {
-        for (Node<T> child : node.getChildren()) {
+        for (Node<T> child : node.getChildrenList()) {
             buildPostOrder(child, postOrder);
         }
         postOrder.add(node);
@@ -212,11 +215,11 @@ public class Tree<T> {
 
         currentPath.add(node);
 
-        if (node.getChildren().size() == 0) {
+        if (node.getChildrenList().size() == 0) {
             // This is a leaf
             paths.add(clone(currentPath));
         }
-        for (Node<T> child : node.getChildren())
+        for (Node<T> child : node.getChildrenList())
             getPath(child, currentPath, paths);
 
         int index = currentPath.indexOf(node);
@@ -231,20 +234,17 @@ public class Tree<T> {
 
         return newList;
     }
-    public String printTree()
-    {
+    public String printTree() {
         SimpleQueue<Node<T>> stack1 = new SimpleQueue<>();
         String out = "1 1\n";
         stack1.add(this.getRoot());
         while (!stack1.isEmpty()) {
             Node<T> node = stack1.remove();
-            if(node.equals(root))
-            {}
-            else{
-            out += (node.getParent().toString()+ " "+ node.toString()+"\n");
+            if (node.equals(root)) {
+            } else {
+                out += (node.getParent().toString() + " " + node.toString() + "\n");
             }
-            for(Node<T> tnode : node.getChildren())
-            {
+            for (Node<T> tnode : node.getChildrenList()) {
                 stack1.add(tnode);
             }
         }
@@ -262,32 +262,32 @@ public class Tree<T> {
         stack1.add(this.getRoot());
         while (!stack1.isEmpty()) {
             Node<T> node = stack1.remove();
-            int countchildren = node.getChildren().size();
-            if(node.getChildren().size()== 0)
+            int countchildren = node.getChildrenList().size();
+            if(node.getChildrenList().size()== 0)
             {
                 count0++;
             }
-            else if(node.getChildren().size() ==1)
+            else if(node.getChildrenList().size() ==1)
             {
                 count1++;
             }
-            else if(node.getChildren().size() == 2)
+            else if(node.getChildrenList().size() == 2)
             {
                 count2++;
             }
-            else if(node.getChildren().size() == 3)
+            else if(node.getChildrenList().size() == 3)
             {
                 count3++;
             }
-            else if(node.getChildren().size() == 4)
+            else if(node.getChildrenList().size() == 4)
             {
                 count4++;
             }
-            else if(node.getChildren().size() == 5)
+            else if(node.getChildrenList().size() == 5)
             {
                 count5++;
             }
-            for(Node<T> tnode : node.getChildren())
+            for(Node<T> tnode : node.getChildrenList())
             {
                 stack1.add(tnode);
             }

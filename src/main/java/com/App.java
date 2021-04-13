@@ -17,6 +17,7 @@ import java.nio.file.Paths;
  */
 public class App extends Application {
     static WebDriver[] webDrivers;
+    static int globalcount;
     @Override
     public void start(Stage stage) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("primary.fxml"));

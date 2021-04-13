@@ -1,17 +1,6 @@
 package com;
 
-import java.io.File;
-import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
-
-import com.Tree.*;
-
-import javafx.util.StringConverter;
-import org.abego.treelayout.NodeExtentProvider;
-import org.abego.treelayout.TreeForTreeLayout;
-import org.abego.treelayout.TreeLayout;
-
+import com.Tree.Tree;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -27,6 +16,12 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.util.StringConverter;
+
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
 public class SecondaryController {
 
@@ -60,9 +55,9 @@ public class SecondaryController {
     @FXML
     private NumberAxis yAxis;
 
-
     @FXML
     private ImageView image;
+
 
     @FXML
     void Back(ActionEvent event) throws IOException 
@@ -91,6 +86,7 @@ public class SecondaryController {
             series.getData().add(new XYChart.Data<>(Integer.toString(i), trees.getValue().counts[i]));
         }
         histogram.getData().add(series);
+
     }
 
     @FXML
@@ -114,4 +110,5 @@ public class SecondaryController {
         trees.setConverter(converter);
         trees.setItems(PrimaryController.trees);
     }
+
 }

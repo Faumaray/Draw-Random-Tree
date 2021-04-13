@@ -1,5 +1,8 @@
 package com.Tree;
+import javax.swing.tree.TreeNode;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Enumeration;
 import java.util.List;
 
 /**
@@ -7,11 +10,12 @@ import java.util.List;
  *
  * @param <T> The class type of the node
  */
-public class Node<T> {
+public class Node<T>{
     private T data;
     private List<Node<T>> children;
     private Node<T> parent;
-    public Node(T data) {
+    public Node(T data)
+    {
         this.data = data;
         this.children = new ArrayList<Node<T>>();
     }
@@ -26,7 +30,12 @@ public class Node<T> {
         this.data = node.getData();
         children = new ArrayList<Node<T>>();
     }
-
+    public List<Node<T>> getChildrenReverse()
+    {
+        List<Node<T>> tmp = this.children;
+        Collections.reverse(tmp);
+        return tmp;
+    }
     /**
      *
      * Add a child to this node.
@@ -75,6 +84,13 @@ public class Node<T> {
         return children.remove(index);
     }
 
+    public boolean isLastInternalNode() {
+        if(children.size() == 0)
+        {
+            return true;
+        }
+        return false;
+    }
     /**
      * Remove given child of this node.
      *
@@ -83,7 +99,7 @@ public class Node<T> {
      * <code>false</code> otherwise.
      */
     public boolean removeChild(Node<T> childToBeDeleted) {
-        List<Node<T>> list = getChildren();
+        List<Node<T>> list = getChildrenList();
         return list.remove(childToBeDeleted);
     }
 
@@ -95,15 +111,11 @@ public class Node<T> {
         this.data = data;
     }
 
-    public Node<T> getParent() {
-        return this.parent;
-    }
-
     public void setParent(Node<T> parent) {
         this.parent = parent;
     }
 
-    public List<Node<T>> getChildren() {
+    public List<Node<T>> getChildrenList() {
         return this.children;
     }
 
@@ -125,4 +137,7 @@ public class Node<T> {
         return this.data.toString();
     }
 
+    public Node<T> getParent() {
+        return parent;
+    }
 }

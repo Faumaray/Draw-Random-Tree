@@ -50,7 +50,7 @@
                 <SpinnerValueFactory.IntegerSpinnerValueFactory amountToStepBy="1" initialValue="100" max="10000" min="0" />
             </valueFactory>
             </Spinner>
-            <Button fx:id="generate" layoutX="261.0" layoutY="111.0" mnemonicParsing="false" onAction="#generate" prefHeight="38.0" prefWidth="115.0" text="Generate" />
+            <Button fx:id="generate" layoutX="189.0" layoutY="110.0" mnemonicParsing="false" onAction="#generate" prefHeight="31.0" prefWidth="115.0" text="Generate" />
             <Button fx:id="goToAlpha" layoutX="34.0" layoutY="72.0" mnemonicParsing="false" onAction="#goToAlpha" prefHeight="38.0" prefWidth="108.0" text="Alpha Graphic" />
             <Button fx:id="goToTreeAndHisto" layoutX="516.0" layoutY="72.0" mnemonicParsing="false" onAction="#goToTreeAndHisto" prefHeight="38.0" prefWidth="108.0" text="Tree and Histo" />
             <Label layoutX="34.0" layoutY="19.0" text="Max Childs" />
@@ -61,6 +61,8 @@
             </valueFactory>
             </Spinner>
             <Label layoutX="246.0" layoutY="60.0" prefHeight="17.0" prefWidth="108.0" text="Count of Trees" />
+            <Button fx:id="strict" layoutX="327.0" layoutY="110.0" mnemonicParsing="false" onAction="#generateStrict" prefHeight="31.0" prefWidth="115.0" text="Generate Strict" />
+            <Button fx:id="clear" layoutX="291.0" layoutY="152.0" mnemonicParsing="false" onAction="#clear" text="Clear" />
          </children>
     </AnchorPane>
   </children>

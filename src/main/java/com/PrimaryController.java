@@ -4,8 +4,8 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
-import java.util.Comparator;
-import java.util.Random;
+import java.util.*;
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -31,7 +31,7 @@ import com.Tree.*;
 
 
 import java.net.URL;
-import java.util.ResourceBundle;
+import java.util.stream.Stream;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -72,14 +72,41 @@ public class PrimaryController {
     @FXML
     private Button goToTreeAndHisto;
 
+    @FXML
+    private Button strict;
+
+    @FXML
+    private Button clear;
+
+
+
+    @FXML
+    void clear(ActionEvent event)
+    {
+        App.globalcount = 0;
+        trees.clear();
+        File directory = new File(".\\OutFiles\\");
+        File[] files = directory.listFiles();
+        assert files != null;
+        for (File file : files)
+        {
+            file.delete();
+        }
+    }
+
+
     Comparator<Tree<Integer>> comparator = Comparator.comparing(Tree<Integer>::getName);
 
     @FXML
-    void generate(ActionEvent event) 
-    {
-        trees = FXCollections.observableArrayList();
-        generate(browser.getValue(), maxChild.getValue(), maxNode.getValue(), count.getValue());
+    void generate(ActionEvent event) throws InterruptedException {
+        generate("NonStrict",browser.getValue(), maxChild.getValue(), maxNode.getValue(), count.getValue());
+        App.globalcount += count.getValue();
+    }
 
+    @FXML
+    void generateStrict(ActionEvent event) throws InterruptedException {
+        generate("Strict",browser.getValue(), maxChild.getValue(), maxNode.getValue(), count.getValue());
+        App.globalcount += count.getValue();
     }
 
     @FXML
@@ -122,9 +149,8 @@ public class PrimaryController {
         browsers.addAll("Опера", "Google Chrome(90 версия)", "Mozila Firefox");
         browser.setItems(browsers);
     }
-    public static ObservableList<Tree<Integer>> trees;
-    private void generate(String browser, int maxChildren, int maxNodes, int number)
-    {
+    public static ObservableList<Tree<Integer>> trees = FXCollections.observableArrayList();
+    private void generate(String regime,String browser, int maxChildren, int maxNodes, int number) throws InterruptedException {
         switch (browser) {
             case "Mozilla Firefox":
             {
@@ -137,7 +163,7 @@ public class PrimaryController {
                             new FirefoxDriver(),
                             new FirefoxDriver()
                     };
-                    generatefor4(number,App.webDrivers, maxChildren, maxNodes);
+                    generatefor4(regime,number,App.webDrivers, maxChildren, maxNodes);
                 } 
                 else if((number % 3) == 0)
                 {
@@ -146,7 +172,7 @@ public class PrimaryController {
                         new FirefoxDriver(),
                         new FirefoxDriver()
                     };
-                    generatefor3(number,App.webDrivers, maxChildren, maxNodes);
+                    generatefor3(regime,number,App.webDrivers, maxChildren, maxNodes);
                 }
                 else if((number % 2) == 0)
                 {
@@ -154,14 +180,14 @@ public class PrimaryController {
                         new FirefoxDriver(),
                         new FirefoxDriver()
                     };
-                    generatefor2(number,App.webDrivers, maxChildren, maxNodes);
+                    generatefor2(regime,number,App.webDrivers, maxChildren, maxNodes);
                 }
                 else 
                 {
                     App.webDrivers = new WebDriver[] {
                             new FirefoxDriver(),
                     };
-                    generatefor1(number,App.webDrivers ,maxChildren, maxNodes);
+                    generatefor1(regime,number,App.webDrivers ,maxChildren, maxNodes);
                 }
                 break;
             }
@@ -176,7 +202,7 @@ public class PrimaryController {
                         new ChromeDriver(),
                         new ChromeDriver()
                     };
-                    generatefor4(number,App.webDrivers, maxChildren, maxNodes);
+                    generatefor4(regime,number,App.webDrivers, maxChildren, maxNodes);
                 } 
                 else if((number % 3) == 0)
                 {
@@ -185,7 +211,7 @@ public class PrimaryController {
                         new ChromeDriver(),
                         new ChromeDriver()
                     };
-                    generatefor3(number,App.webDrivers, maxChildren, maxNodes);
+                    generatefor3(regime,number,App.webDrivers, maxChildren, maxNodes);
                 }
                 else if((number % 2) == 0)
                 {
@@ -193,14 +219,14 @@ public class PrimaryController {
                         new ChromeDriver(),
                         new ChromeDriver()
                     };
-                    generatefor2(number,App.webDrivers, maxChildren, maxNodes);
+                    generatefor2(regime,number,App.webDrivers, maxChildren, maxNodes);
                 }
                 else 
                 {
                     App.webDrivers = new WebDriver[] {
                             new ChromeDriver()
                     };
-                    generatefor1(number,App.webDrivers ,maxChildren, maxNodes);
+                    generatefor1(regime,number,App.webDrivers ,maxChildren, maxNodes);
                 }
                 break;
             }       
@@ -215,7 +241,7 @@ public class PrimaryController {
                         new OperaDriver(),
                         new OperaDriver()
                     };
-                    generatefor4(number,App.webDrivers, maxChildren, maxNodes);
+                    generatefor4(regime,number,App.webDrivers, maxChildren, maxNodes);
                 } 
                 else if((number % 3) == 0)
                 {
@@ -224,7 +250,7 @@ public class PrimaryController {
                         new OperaDriver(),
                         new OperaDriver()
                     };
-                    generatefor3(number,App.webDrivers, maxChildren, maxNodes);
+                    generatefor3(regime,number,App.webDrivers, maxChildren, maxNodes);
                 }
                 else if((number % 2) == 0)
                 {
@@ -232,25 +258,27 @@ public class PrimaryController {
                         new OperaDriver(),
                         new OperaDriver()
                     };
-                    generatefor2(number,App.webDrivers, maxChildren, maxNodes);
+                    generatefor2(regime,number,App.webDrivers, maxChildren, maxNodes);
                 }
                 else 
                 {
                     App.webDrivers = new WebDriver[] {
                             new OperaDriver()
                     };
-                    generatefor1(number,App.webDrivers ,maxChildren, maxNodes);
+                    generatefor1(regime,number,App.webDrivers ,maxChildren, maxNodes);
                 }
                 break;
             } 
         } 
     }
-        public void generatefor4(int number,WebDriver[] drivers, int maxChilds, int maxNodes)
-    {
+        public void generatefor4(String regime,int number,WebDriver[] drivers, int maxChilds, int maxNodes) throws InterruptedException
+        {
+            CountDownLatch latch = new CountDownLatch(4);
         ExecutorService executor = Executors.newSingleThreadExecutor();
         executor.submit(() -> {
             try {
-                printFiles(1 ,number/4, drivers[0],maxChilds,maxNodes);
+                printFiles(regime,1 ,number/4, drivers[0],maxChilds,maxNodes);
+                latch.countDown();
             } catch (InterruptedException | IOException e) {
                 e.printStackTrace();
             }
@@ -258,7 +286,8 @@ public class PrimaryController {
         ExecutorService executor2 = Executors.newSingleThreadExecutor();
         executor2.submit(() -> {
             try {
-                printFiles((number/4)+1 ,(number/4)*2, drivers[1] ,maxChilds,maxNodes);
+                printFiles(regime,(number/4)+1 ,(number/4)*2, drivers[1] ,maxChilds,maxNodes);
+                latch.countDown();
             } catch (InterruptedException | IOException e) {
                 e.printStackTrace();
             }
@@ -266,7 +295,8 @@ public class PrimaryController {
         ExecutorService executor3 = Executors.newSingleThreadExecutor();
         executor3.submit(() -> {
             try {
-                printFiles(((number/4)*2)+1 ,(number/4)*3, drivers[2],maxChilds,maxNodes);
+                printFiles(regime,((number/4)*2)+1 ,(number/4)*3, drivers[2],maxChilds,maxNodes);
+                latch.countDown();
             } catch (InterruptedException | IOException e) {
                 e.printStackTrace();
             }
@@ -274,22 +304,26 @@ public class PrimaryController {
         ExecutorService executor4 = Executors.newSingleThreadExecutor();
         executor4.submit(() -> {
             try {
-                printFiles(((number/4)*3) + 1 ,number, drivers[3],maxChilds,maxNodes);
+                printFiles(regime,((number/4)*3) + 1 ,number, drivers[3],maxChilds,maxNodes);
+                latch.countDown();
             } catch (InterruptedException | IOException e) {
                 e.printStackTrace();
             }
         });
+            latch.await();
         executor.shutdown();
         executor2.shutdown();
         executor3.shutdown();
         executor4.shutdown();
+
     }
-        public void generatefor3(int number ,WebDriver[] drivers, int maxChilds, int maxNodes)
-    {
+        public void generatefor3(String regime,int number ,WebDriver[] drivers, int maxChilds, int maxNodes) throws InterruptedException {
+        CountDownLatch latch = new CountDownLatch(3);
         ExecutorService executor = Executors.newSingleThreadExecutor();
         executor.submit(() -> {
             try {
-                printFiles(1 ,number/3, drivers[0],maxChilds,maxNodes);
+                printFiles(regime,1 ,number/3, drivers[0],maxChilds,maxNodes);
+                latch.countDown();
             } catch (InterruptedException | IOException e) {
                 e.printStackTrace();
             }
@@ -297,7 +331,8 @@ public class PrimaryController {
         ExecutorService executor2 = Executors.newSingleThreadExecutor();
         executor2.submit(() -> {
             try {
-                printFiles((number/3)+1 ,(number/3)*2, drivers[1] ,maxChilds,maxNodes);
+                printFiles(regime,(number/3)+1 ,(number/3)*2, drivers[1] ,maxChilds,maxNodes);
+                latch.countDown();
             } catch (InterruptedException | IOException e) {
                 e.printStackTrace();
             }
@@ -305,21 +340,25 @@ public class PrimaryController {
         ExecutorService executor3 = Executors.newSingleThreadExecutor();
         executor3.submit(() -> {
             try {
-                printFiles(((number/3)*2)+1 ,number, drivers[2],maxChilds,maxNodes);
+                printFiles(regime,((number/3)*2)+1 ,number, drivers[2],maxChilds,maxNodes);
+                latch.countDown();
             } catch (InterruptedException | IOException e) {
                 e.printStackTrace();
             }
         });
+        latch.await();
         executor.shutdown();
         executor2.shutdown();
         executor3.shutdown();
+
     }
-        public void generatefor2(int number ,WebDriver[] drivers, int maxChilds, int maxNodes)
-    {
+        public void generatefor2(String regime,int number ,WebDriver[] drivers, int maxChilds, int maxNodes) throws InterruptedException {
+        CountDownLatch latch = new CountDownLatch(2);
         ExecutorService executor = Executors.newSingleThreadExecutor();
                 executor.submit(() -> {
                     try {
-                        printFiles(1 ,number/2, drivers[0],maxChilds,maxNodes);
+                        printFiles(regime,1 ,number/2, drivers[0],maxChilds,maxNodes);
+                        latch.countDown();
                     } catch (InterruptedException | IOException e) {
                         e.printStackTrace();
                     }
@@ -327,26 +366,31 @@ public class PrimaryController {
         ExecutorService executor2 = Executors.newSingleThreadExecutor();
                 executor2.submit(() -> {
                     try {
-                        printFiles((number/2)+1 ,number, drivers[1],maxChilds,maxNodes);
+                        printFiles(regime,(number/2)+1 ,number, drivers[1],maxChilds,maxNodes);
+                        latch.countDown();
                     } catch (InterruptedException | IOException e) {
                         e.printStackTrace();
                     }
                 });
+        latch.await();
         executor.shutdown();
         executor2.shutdown();
     }
-        public void generatefor1(int number , WebDriver[] driver, int maxChilds, int maxNodes)
-    {
+        public void generatefor1(String regime,int number , WebDriver[] driver, int maxChilds, int maxNodes) throws InterruptedException {
+        CountDownLatch latch = new CountDownLatch(1);
         ExecutorService executor = Executors.newSingleThreadExecutor();
                 executor.submit(() -> {
                     try {
-                        printFiles(1 ,number, driver[0],maxChilds,maxNodes);
+                        printFiles(regime,1 ,number, driver[0],maxChilds,maxNodes);
+                        latch.countDown();
                     } catch (InterruptedException | IOException e) {
                         e.printStackTrace();
                     }
                 });
+                latch.await();
+                executor.shutdown();
     }
-        public void printFiles(int number,int max, WebDriver driver, int maxChilds, int maxNodes) throws InterruptedException, IOException
+        public void printFiles(String regime ,int number,int max, WebDriver driver, int maxChilds, int maxNodes) throws InterruptedException, IOException
     {
         
         String start = new File(".\\index.html").getAbsolutePath();
@@ -358,12 +402,21 @@ public class PrimaryController {
                 WebElement searchInput = driver.findElement(By.id("txt"));
                 WebElement canvas = driver.findElement(By.id("canv"));
                 TimeUnit.SECONDS.sleep(1);
-                Tree<Integer> tree = new Tree<>(generateTree(maxChilds, maxNodes));
+                Tree<Integer> tree;
+                if(regime.equals("Strict"))
+                {
+                    tree = new Tree<>(generateStrictTree(maxChilds, maxNodes), maxChilds);
+                    tree.setName("№" + (App.globalcount+count) + " (Strict)");
+                }
+                else {
+                    tree = new Tree<>(generateTree(maxChilds, maxNodes), maxChilds);
+                    tree.setName("№" + (App.globalcount+count));
+                }
                 /*if(tree.size() == 1 || tree.size() == 0)
                 {
                     continue;
                 }*/
-                tree.setName("№" + count);
+
                 trees.add(tree);
                 (new WebDriverWait(driver, 10)).until(new ExpectedCondition<Boolean>() {
                     public Boolean apply(WebDriver d) {
@@ -425,6 +478,27 @@ public class PrimaryController {
                 stack.add(tmpNode);
             }
             count+=tmp;
+        }
+        return root;
+    }
+    public static Node<Integer> generateStrictTree(int childLimit, int maxNodes)
+    {
+
+        Random rand = new Random();
+        Node<Integer> root = new Node<Integer>(1);
+        SimpleQueue<Node<Integer>> stack = new SimpleQueue<>();
+        stack.add(root);
+        int count = 1;
+        while (!stack.isEmpty() && count < maxNodes)
+        {
+            Node<Integer> node = stack.remove();
+            for(int i = count; i < count+childLimit;i++)
+            {
+                Node<Integer> tmpNode = new Node<Integer>(i);
+                node.addChild(tmpNode);
+                stack.add(tmpNode);
+            }
+            count+=childLimit;
         }
         return root;
     }

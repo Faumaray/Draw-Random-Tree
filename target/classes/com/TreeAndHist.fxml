@@ -28,7 +28,7 @@
                        <items>
                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                               <children>
-                                 <BarChart id="histogram" fx:id="histogram" layoutX="223.0" layoutY="43.0" minWidth="50.0" prefHeight="313.0" prefWidth="1214.0" title="Histogram" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <BarChart id="histogram" fx:id="histogram" layoutX="223.0" layoutY="43.0" minWidth="50.0" prefHeight="332.0" prefWidth="1214.0" title="Histogram" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                    <xAxis>
                                      <CategoryAxis side="BOTTOM" fx:id="xAxis" />
                                    </xAxis>
@@ -42,7 +42,7 @@
                               <children>
                                  <AnchorPane fx:id="anchorPane" layoutX="305.0" layoutY="102.0" prefHeight="252.0" prefWidth="897.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                     <children>
-                                       <ImageView fx:id="image" fitHeight="514.0" fitWidth="591.0" pickOnBounds="true" preserveRatio="true" />
+                                       <ImageView fx:id="image" fitHeight="150.0" fitWidth="200.0" layoutX="20.0" layoutY="60.0" pickOnBounds="true" />
                                     </children>
                                  </AnchorPane>
                               </children>
