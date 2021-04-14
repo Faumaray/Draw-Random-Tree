@@ -1,22 +1,24 @@
 package com.Tree;
-import javax.swing.tree.TreeNode;
+
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Enumeration;
 import java.util.List;
+
 
 /**
  * A node of any type. A node contains a data and links to it's children and it's parent.
  *
  * @param <T> The class type of the node
  */
-public class Node<T>{
-    private T data;
-    private List<Node<T>> children;
-    private Node<T> parent;
+public class Node<T> {
+    public T name;
+    public Node<T> parent;
+    public List<Node<T>> children;
+    
+    
     public Node(T data)
     {
-        this.data = data;
+        this.name = data;
         this.children = new ArrayList<Node<T>>();
     }
 
@@ -26,8 +28,9 @@ public class Node<T>{
      *
      * @param node The node whose data is to be copied.
      */
+    
     public Node(Node<T> node) {
-        this.data = node.getData();
+        this.name = node.getData();
         children = new ArrayList<Node<T>>();
     }
     public List<Node<T>> getChildrenReverse()
@@ -40,11 +43,11 @@ public class Node<T>{
      *
      * Add a child to this node.
      *
-     * @param child child node
+     * @param node child node
      */
-    public void addChild(Node<T> child) {
-        child.setParent(this);
-        children.add(child);
+    public void addChild(Node<T> node) {
+        node.setParent(this);
+        children.add(node);
     }
 
     /**
@@ -58,7 +61,6 @@ public class Node<T>{
         child.setParent(this);
         this.children.add(index, child);
     }
-
     public void setChildren(List<Node<T>> children) {
         for (Node<T> child : children)
             child.setParent(this);
@@ -83,14 +85,6 @@ public class Node<T>{
     public Node<T> removeChildAt(int index) {
         return children.remove(index);
     }
-
-    public boolean isLastInternalNode() {
-        if(children.size() == 0)
-        {
-            return true;
-        }
-        return false;
-    }
     /**
      * Remove given child of this node.
      *
@@ -102,19 +96,15 @@ public class Node<T>{
         List<Node<T>> list = getChildrenList();
         return list.remove(childToBeDeleted);
     }
-
     public T getData() {
-        return this.data;
+        return this.name;
     }
-
     public void setData(T data) {
-        this.data = data;
+        this.name = data;
     }
-
     public void setParent(Node<T> parent) {
         this.parent = parent;
     }
-
     public List<Node<T>> getChildrenList() {
         return this.children;
     }
@@ -125,7 +115,7 @@ public class Node<T>{
             return false;
 
         if (obj instanceof Node) {
-            if (((Node<?>) obj).getData().equals(this.data))
+            if (((Node<?>) obj).getData().equals(this.name))
                 return true;
         }
 
@@ -134,10 +124,10 @@ public class Node<T>{
 
     @Override
     public String toString() {
-        return this.data.toString();
+        return this.name.toString();
     }
-
     public Node<T> getParent() {
         return parent;
     }
+
 }

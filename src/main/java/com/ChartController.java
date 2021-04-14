@@ -56,7 +56,7 @@ public class ChartController {
     {
         ObservableList<XYChart.Data<String, Number>> data = FXCollections.<XYChart.Data<String, Number>>observableArrayList();
         for(int i = 0; i<PrimaryController.trees.size(); i++) {
-            data.add(new XYChart.Data(Double.toString(PrimaryController.trees.get(i).alpha), PrimaryController.trees.get(i).size()));
+            data.add(new XYChart.Data(Integer.toString(PrimaryController.trees.get(i).size()), PrimaryController.trees.get(i).alpha));
         }
         XYChart.Series series = new XYChart.Series(data);
         chart.getData().add(series);
