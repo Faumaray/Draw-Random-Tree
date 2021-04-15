@@ -39,7 +39,6 @@
   <children>
     <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="188.0" prefWidth="640.0" VBox.vgrow="ALWAYS">
          <children>
-            <ComboBox fx:id="browser" layoutX="223.0" layoutY="15.0" prefHeight="24.0" prefWidth="191.0" promptText="Выберите браузер" />
             <Spinner fx:id="maxChild" editable="true" layoutX="34.0" layoutY="37.0">
             <valueFactory>
                 <SpinnerValueFactory.IntegerSpinnerValueFactory amountToStepBy="1" initialValue="5" max="10" min="1" />
@@ -50,19 +49,19 @@
                 <SpinnerValueFactory.IntegerSpinnerValueFactory amountToStepBy="1" initialValue="100" max="10000" min="0" />
             </valueFactory>
             </Spinner>
-            <Button fx:id="generate" layoutX="189.0" layoutY="110.0" mnemonicParsing="false" onAction="#generate" prefHeight="31.0" prefWidth="115.0" text="Generate" />
+            <Button fx:id="generate" layoutX="194.0" layoutY="78.0" mnemonicParsing="false" onAction="#generate" prefHeight="31.0" prefWidth="115.0" text="Generate" />
             <Button fx:id="goToAlpha" layoutX="34.0" layoutY="72.0" mnemonicParsing="false" onAction="#goToAlpha" prefHeight="38.0" prefWidth="108.0" text="Alpha Graphic" />
             <Button fx:id="goToTreeAndHisto" layoutX="516.0" layoutY="72.0" mnemonicParsing="false" onAction="#goToTreeAndHisto" prefHeight="38.0" prefWidth="108.0" text="Tree and Histo" />
             <Label layoutX="34.0" layoutY="19.0" text="Max Childs" />
             <Label layoutX="479.0" layoutY="19.0" prefHeight="17.0" prefWidth="76.0" text="Max Nodes" />
-            <Spinner fx:id="count" editable="true" layoutX="246.0" layoutY="78.0">
+            <Spinner fx:id="count" editable="true" layoutX="251.0" layoutY="37.0">
             <valueFactory>
                 <SpinnerValueFactory.IntegerSpinnerValueFactory amountToStepBy="1" initialValue="10" max="10000" min="1" />
             </valueFactory>
             </Spinner>
-            <Label layoutX="246.0" layoutY="60.0" prefHeight="17.0" prefWidth="108.0" text="Count of Trees" />
-            <Button fx:id="strict" layoutX="327.0" layoutY="110.0" mnemonicParsing="false" onAction="#generateStrict" prefHeight="31.0" prefWidth="115.0" text="Generate Strict" />
-            <Button fx:id="clear" layoutX="291.0" layoutY="152.0" mnemonicParsing="false" onAction="#clear" text="Clear" />
+            <Label layoutX="251.0" layoutY="19.0" prefHeight="17.0" prefWidth="108.0" text="Count of Trees" />
+            <Button fx:id="strict" layoutX="332.0" layoutY="78.0" mnemonicParsing="false" onAction="#generateStrict" prefHeight="31.0" prefWidth="115.0" text="Generate Strict" />
+            <Button fx:id="clear" layoutX="296.0" layoutY="120.0" mnemonicParsing="false" onAction="#clear" text="Clear" />
          </children>
     </AnchorPane>
   </children>

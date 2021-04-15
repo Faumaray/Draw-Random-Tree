@@ -7,22 +7,20 @@ import com.Queue.SimpleQueue;
  *
  * @param <T> Any class type
  */
-public class Tree<T> {
+public class Tree<T>{
     public int number;
     public String name = "№" + number;
     private Node<T> root;
     public int[] counts = new int[6];
     public double alpha;
-    public int order;
     
     /**
      * Initialize a tree with the specified root node.
      *
      * @param root The root node of the tree
      */
-    public Tree(Node<T> root, int order) {
+    public Tree(Node<T> root) {
         this.root = root;
-        this.order = order;
     }
 
     /**
@@ -53,7 +51,6 @@ public class Tree<T> {
         return root;
     }
 
-
     /**
      * Set the root node of the tree. Replaces existing root node.
      *
@@ -81,7 +78,7 @@ public class Tree<T> {
      * @return The number of nodes in the tree
      */
     public int size() {
-        return getNumberOfDescendants(root);
+        return getNumberOfDescendants(root)+1;
     }
 
     /**
@@ -224,7 +221,11 @@ public class Tree<T> {
 
         int index = currentPath.indexOf(node);
         for (int i = index; i < currentPath.size(); i++)
+        {   
+            if(index == -1)
+            {continue;}
             currentPath.remove(index);
+        }
     }
 
     private ArrayList<Node<T>> clone(ArrayList<Node<T>> list) {
@@ -252,52 +253,39 @@ public class Tree<T> {
     }
     public void calccounts()
     {
-        int count0=0;
-        int count1=0;
-        int count2=0;
-        int count3=0;
-        int count4=0;
-        int count5=0;
         SimpleQueue<Node<T>> stack1 = new SimpleQueue<>();
         stack1.add(this.getRoot());
         while (!stack1.isEmpty()) {
             Node<T> node = stack1.remove();
-            int countchildren = node.getChildrenList().size();
             if(node.getChildrenList().size()== 0)
             {
-                count0++;
+                counts[0]++;
             }
             else if(node.getChildrenList().size() ==1)
             {
-                count1++;
+                counts[1]++;
             }
             else if(node.getChildrenList().size() == 2)
             {
-                count2++;
+                counts[2]++;
             }
             else if(node.getChildrenList().size() == 3)
             {
-                count3++;
+                counts[3]++;
             }
             else if(node.getChildrenList().size() == 4)
             {
-                count4++;
+                counts[4]++;
             }
             else if(node.getChildrenList().size() == 5)
             {
-                count5++;
+                counts[5]++;
             }
             for(Node<T> tnode : node.getChildrenList())
             {
                 stack1.add(tnode);
             }
         }
-        counts[0] = count0;
-        counts[1] = count1;
-        counts[2] = count2;
-        counts[3] = count3;
-        counts[4] = count4;
-        counts[5] = count5;
     }
     public void calculateAlpha()
     {
@@ -316,5 +304,9 @@ public class Tree<T> {
         {
         alpha = out;
         }
+    }
+    public double getAlpha()
+    {
+        return alpha;
     }
 }
