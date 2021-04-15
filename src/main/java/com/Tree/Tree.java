@@ -78,7 +78,7 @@ public class Tree<T>{
      * @return The number of nodes in the tree
      */
     public int size() {
-        return getNumberOfDescendants(root);
+        return getNumberOfDescendants(root)+1;
     }
 
     /**
@@ -304,5 +304,9 @@ public class Tree<T>{
         {
         alpha = out;
         }
+    }
+    public double getAlpha()
+    {
+        return alpha;
     }
 }

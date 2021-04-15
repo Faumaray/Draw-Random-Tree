@@ -19,7 +19,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.Spinner;
 import javafx.stage.Stage;
 
@@ -64,17 +63,11 @@ public class PrimaryController {
     {
         App.globalcount = 0;
         trees.clear();
-        File directory = new File(".\\OutFiles\\");
-        File[] files = directory.listFiles();
-        assert files != null;
-        for (File file : files)
-        {
-            file.delete();
-        }
     }
 
 
     Comparator<Tree<Integer>> comparator = Comparator.comparingInt(Tree<Integer>::getNumber);
+    Comparator<Tree<Integer>> comparatorAlpha = Comparator.comparingInt(Tree<Integer>::size);
 
     @FXML
     void generate(ActionEvent event) throws InterruptedException, IOException {
@@ -98,7 +91,7 @@ public class PrimaryController {
             alert.showAndWait();
         }
         else {
-            trees.sort(comparator);
+            trees.sort(comparatorAlpha);
             Stage stage;
             Scene scene;
             stage = (Stage) goToTreeAndHisto.getScene().getWindow();

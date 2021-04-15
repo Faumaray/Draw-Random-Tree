@@ -60,6 +60,7 @@ public class ChartController {
         }
         XYChart.Series series = new XYChart.Series(data);
         chart.getData().add(series);
+        chart.setCreateSymbols(false);
         chart.autosize();
     }
 }
