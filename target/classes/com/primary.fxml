@@ -62,6 +62,7 @@
             <Label layoutX="251.0" layoutY="19.0" prefHeight="17.0" prefWidth="108.0" text="Count of Trees" />
             <Button fx:id="strict" layoutX="332.0" layoutY="78.0" mnemonicParsing="false" onAction="#generateStrict" prefHeight="31.0" prefWidth="115.0" text="Generate Strict" />
             <Button fx:id="clear" layoutX="296.0" layoutY="120.0" mnemonicParsing="false" onAction="#clear" text="Clear" />
+            <Button fx:id="math" layoutX="34.0" layoutY="129.0" mnemonicParsing="false" onAction="#gotoMath" prefHeight="38.0" prefWidth="108.0" text="Math" />
          </children>
     </AnchorPane>
   </children>

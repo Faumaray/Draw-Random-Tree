@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import com.Tree.Tree;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -27,10 +29,10 @@ public class ChartController {
     private URL location;
 
     @FXML
-    private LineChart<String, Number> chart;
+    private LineChart<Number, Number> chart;
 
     @FXML
-    private CategoryAxis xLine;
+    private NumberAxis xLine;
 
     @FXML
     private NumberAxis yLine;
@@ -54,13 +56,14 @@ public class ChartController {
     @FXML
     void initialize() 
     {
-        ObservableList<XYChart.Data<String, Number>> data = FXCollections.<XYChart.Data<String, Number>>observableArrayList();
-        for(int i = 0; i<PrimaryController.trees.size(); i++) {
-            data.add(new XYChart.Data(Integer.toString(PrimaryController.trees.get(i).size()), PrimaryController.trees.get(i).alpha));
+        ObservableList<XYChart.Data<Number, Number>> data = FXCollections.<XYChart.Data<Number, Number>>observableArrayList();
+        for(Tree<Integer> tree : PrimaryController.trees)
+        {
+            data.add(new XYChart.Data(tree.size(), tree.getAlpha()));
         }
         XYChart.Series series = new XYChart.Series(data);
         chart.getData().add(series);
-        chart.setCreateSymbols(false);
+        //chart.setCreateSymbols(false);
         chart.autosize();
     }
 }

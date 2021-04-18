@@ -13,6 +13,7 @@ public class Tree<T>{
     private Node<T> root;
     public int[] counts = new int[6];
     public double alpha;
+    int leafs;
     
     /**
      * Initialize a tree with the specified root node.
@@ -23,6 +24,10 @@ public class Tree<T>{
         this.root = root;
     }
 
+    public int getLeafs()
+    {
+        return leafs;
+    }
     /**
      * Checks if the tree is empty (root node is null)
      *
@@ -289,13 +294,14 @@ public class Tree<T>{
     }
     public void calculateAlpha()
     {
-        double nodes = this.size();
-        double leafs = 0;
+        long nodes = this.size();
+        long leafs = 0;
         for(var value : this.getPathsFromRootToAnyLeaf())
         {
             leafs++;
         }
-        double out = nodes/leafs;
+        this.leafs = (int)leafs;
+        long out = nodes/leafs;
         if(out == Double.POSITIVE_INFINITY)
         {
             alpha = 1;

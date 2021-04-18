@@ -32,38 +32,19 @@
   OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 -->
 
-<?import javafx.scene.*?>
-<?import javafx.scene.chart.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<Scene xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ChartController">
-    <AnchorPane prefHeight="546.0" prefWidth="793.0">
-      <children>
-         <HBox layoutY="98.0" prefHeight="448.0" prefWidth="801.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-8.0" AnchorPane.topAnchor="98.0">
-            <children>
-               <VBox prefHeight="448.0" prefWidth="812.0" HBox.hgrow="ALWAYS">
-                  <children>
-                     <LineChart fx:id="chart" prefHeight="448.0" prefWidth="767.0" VBox.vgrow="ALWAYS">
-                       <xAxis>
-                         <NumberAxis side="BOTTOM" fx:id="xLine" />
-                       </xAxis>
-                       <yAxis>
-                         <NumberAxis fx:id="yLine" side="LEFT" />
-                       </yAxis>
-                     </LineChart>
-                  </children>
-               </VBox>
-            </children>
-         </HBox>
-         <HBox layoutX="1.0" layoutY="3.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="100.0" prefWidth="790.0" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="3.0">
-            <children>
-               <VBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="142.0" HBox.hgrow="ALWAYS">
-                  <children>
-                     <Button fx:id="back" mnemonicParsing="false" onAction="#back" prefHeight="38.0" prefWidth="126.0" text="Back" />
-                  </children>
-               </VBox>
-            </children>
-         </HBox>
-      </children></AnchorPane>
-</Scene>
+<VBox prefHeight="154.0" prefWidth="304.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.MathWait">
+  <children>
+    <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="186.0" prefWidth="322.0" VBox.vgrow="ALWAYS">
+         <children>
+            <Button fx:id="back" layoutX="14.0" layoutY="15.0" mnemonicParsing="false" onAction="#back" text="Back" />
+            <Spinner fx:id="amount" layoutX="80.0" layoutY="15.0" />
+            <Label fx:id="mathWait" layoutX="14.0" layoutY="86.0" prefHeight="16.0" prefWidth="277.0" />
+            <Label fx:id="disp" layoutX="15.0" layoutY="61.0" prefHeight="16.0" prefWidth="277.0" />
+            <Button fx:id="calc" layoutX="238.0" layoutY="14.0" mnemonicParsing="false" onAction="#calc" text="Calc" />
+         </children>
+    </AnchorPane>
+  </children>
+</VBox>

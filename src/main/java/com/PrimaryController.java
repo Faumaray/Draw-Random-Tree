@@ -20,6 +20,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Spinner;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class PrimaryController {
@@ -56,6 +57,33 @@ public class PrimaryController {
     @FXML
     private Button clear;
 
+    @FXML
+    private Button math;
+
+    @FXML
+    void gotoMath(ActionEvent event) throws IOException 
+    {
+        if(trees == null)
+        {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Alert");
+            alert.setHeaderText("Нет данных для отображения!");
+            alert.setContentText("Сгенерируйте деревья!");
+            alert.showAndWait();
+        }
+        else {
+            trees.sort(comparator);
+            Stage stage;
+            Scene scene;
+            VBox vbox;
+            stage = (Stage) math.getScene().getWindow();
+            vbox = FXMLLoader.load(getClass().getResource("MathWait.fxml"));
+            scene = new Scene(vbox);
+            stage.setScene(scene);
+            stage.setTitle("Математическое ожидание и дисперсия");
+            stage.show();
+        }
+    }
 
 
     @FXML

@@ -46,7 +46,7 @@
                   <children>
                      <LineChart fx:id="chart" prefHeight="448.0" prefWidth="767.0" VBox.vgrow="ALWAYS">
                        <xAxis>
-                         <CategoryAxis side="BOTTOM" fx:id="xLine" />
+                         <NumberAxis side="BOTTOM" fx:id="xLine" />
                        </xAxis>
                        <yAxis>
                          <NumberAxis fx:id="yLine" side="LEFT" />
