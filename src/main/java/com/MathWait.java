@@ -11,6 +11,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Spinner;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.SpinnerValueFactory.IntegerSpinnerValueFactory;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -27,10 +28,7 @@ public class MathWait {
     private Button back;
 
     @FXML
-    private Label mathWait;
-
-    @FXML
-    private Label disp;
+    private TextArea out;
 
     @FXML
     private Button calc;
@@ -55,17 +53,25 @@ public class MathWait {
     @FXML
     void calc(ActionEvent event) 
     {
+        out.clear();
         double mathW = 0;
         double mathWPow = 0;
         double disper = 0;
+        int leafs = 0;
+        int nodes = 0;
+        int height = 0;
         for(int index = 0;index < amount.getValue()-1;index++)
         {
             mathW += ((1.0/amount.getValue().doubleValue())) * PrimaryController.trees.get(index).getAlpha();
             mathWPow += ((1.0/amount.getValue().doubleValue())) * Math.pow(PrimaryController.trees.get(index).getAlpha(), 2);
+            leafs += PrimaryController.trees.get(index).getLeafs();
+            nodes += PrimaryController.trees.get(index).size();
+            height += PrimaryController.trees.get(index).getHeight();
         }
         disper = mathWPow - Math.pow(mathW,2);
-        mathWait.setText("Мат. ожидание: "+ mathW);
-        disp.setText("Дисперсия: " + disper);
+        out.appendText("Мат. ожидание: "+ mathW+"\n");
+        out.appendText("Дисперсия: " + disper + "\n" + "Среднее кол-во вершин: " + (double)nodes/amount.getValue().doubleValue() + "\n" +
+        "Среднее кол-во висячих: " + (double)leafs/amount.getValue().doubleValue() + "\nСредняя высота: "+ (double)height/amount.getValue().doubleValue());
     }
 
     @FXML
@@ -74,5 +80,6 @@ public class MathWait {
         IntegerSpinnerValueFactory factory = new IntegerSpinnerValueFactory(1, PrimaryController.trees.size(), 1, 1);
         amount.setValueFactory(factory);
         amount.setEditable(true);
+        out.setEditable(false);
     }
 }
