@@ -8,6 +8,8 @@ import com.Queue.SimpleQueue;
  * @param <T> Any class type
  */
 public class Tree<T>{
+    public static final String ANSI_RESET = "\u001B[0m";
+    public static final String ANSI_GREEN = "\u001B[32m";
     public int number;
     public String name = "№" + number;
     private Node<T> root;
@@ -23,6 +25,7 @@ public class Tree<T>{
     public Tree(Node<T> root) {
         this.root = root;
     }
+
 
     public int getLeafs()
     {
@@ -240,21 +243,47 @@ public class Tree<T>{
 
         return newList;
     }
-    public String printTree() {
+    public void printTree() {
         SimpleQueue<Node<T>> stack1 = new SimpleQueue<>();
-        String out = "1 1\n";
+        System.out.print("1-0");
         stack1.add(this.getRoot());
+        int height = 1;
         while (!stack1.isEmpty()) {
             Node<T> node = stack1.remove();
-            if (node.equals(root)) {
-            } else {
-                out += (node.getParent().toString() + " " + node.toString() + "\n");
+            if (node.equals(root)) 
+            {
+            }
+            else
+            {
+                if(node.height == height)
+                {
+                    if(node.children.size() == 0)
+                        {
+                            System.out.print(ANSI_GREEN + node.name+"-"+node.parent.name+";" + ANSI_RESET);
+                        }
+                        else
+                        {
+                        System.out.print(node.name+"-"+node.parent.name+";");
+                        }
+                }
+                else
+                {
+                    System.out.print("\n");
+                    height++;
+                    if(node.children.size() == 0)
+                        {
+                            System.out.print(ANSI_GREEN + node.name+"-"+node.parent.name+";" + ANSI_RESET);
+                        }
+                        else
+                        {
+                        System.out.print(node.name+"-"+node.parent.name+";");
+                        }
+                }
             }
             for (Node<T> tnode : node.getChildrenList()) {
                 stack1.add(tnode);
             }
         }
-        return out;
     }
     public void calccounts()
     {
@@ -294,22 +323,10 @@ public class Tree<T>{
     }
     public void calculateAlpha()
     {
-        long nodes = this.size();
-        long leafs = 0;
-        for(var value : this.getPathsFromRootToAnyLeaf())
-        {
-            leafs++;
-        }
+        double nodes = (double)this.size();
+        double leafs = (double)this.getPathsFromRootToAnyLeaf().size();
+        this.alpha = nodes/leafs;
         this.leafs = (int)leafs;
-        long out = nodes/leafs;
-        if(out == Double.POSITIVE_INFINITY)
-        {
-            alpha = 1;
-        }
-        else
-        {
-        alpha = out;
-        }
     }
     public double getAlpha()
     {

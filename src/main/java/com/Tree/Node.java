@@ -14,10 +14,12 @@ public class Node<T> {
     public T name;
     public Node<T> parent;
     public List<Node<T>> children;
+    public int height;
     
     
-    public Node(T data)
+    public Node(T data, int h)
     {
+        this.height = h;
         this.name = data;
         this.children = new ArrayList<Node<T>>();
     }
@@ -28,6 +30,7 @@ public class Node<T> {
      *
      * @param node The node whose data is to be copied.
      */
+    
     
     public Node(Node<T> node) {
         this.name = node.getData();

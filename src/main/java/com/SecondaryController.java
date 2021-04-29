@@ -22,6 +22,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -86,7 +87,8 @@ public class SecondaryController {
             series.getData().add(new XYChart.Data<>(Integer.toString(i), trees.getValue().counts[i]));
         }
         histogram.getData().add(series);
-
+        trees.getValue().printTree();
+        System.out.println("\n alpha: " +trees.getValue().alpha);
     }
     public void writedownjson(Node<Integer> root) throws IOException
     {

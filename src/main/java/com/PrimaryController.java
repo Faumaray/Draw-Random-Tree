@@ -180,42 +180,53 @@ public class PrimaryController {
  
         public static Node<Integer> generateTree(int childLimit, int maxNodes)
     {
-        
         Random rand = new Random();
-        Node<Integer> root = new Node<Integer>(1);
+        Node<Integer> root = new Node<Integer>(1,1);
         SimpleQueue<Node<Integer>> stack = new SimpleQueue<>();
         stack.add(root);
         int tmp;
         int count = 2;
+        int height = 2;
         while (!stack.isEmpty() && count < maxNodes)
-        {
+        {   
             Node<Integer> node = stack.remove();
-            tmp = rand.nextInt(childLimit+1);
+            tmp =(int) ((Math.random()+0.1)*childLimit);
+            if(node.height != height-1)
+            {
+                height++;
+            }
             for(int i = count; i < count+tmp;i++)
             {
-                Node<Integer> tmpNode = new Node<Integer>(i);
+                Node<Integer> tmpNode = new Node<Integer>(i, height);
                 node.addChild(tmpNode);
                 stack.add(tmpNode);
             }
+           
             count+=tmp;
         }
         return root;
     }
     public static Node<Integer> generateStrictTree(int childLimit, int maxNodes)
     {
-        Node<Integer> root = new Node<Integer>(1);
+        Node<Integer> root = new Node<Integer>(1,1);
         SimpleQueue<Node<Integer>> stack = new SimpleQueue<>();
         stack.add(root);
         int count = 2;
+        int height = 2;
         while (!stack.isEmpty() && count < maxNodes)
         {
             Node<Integer> node = stack.remove();
+            if(node.height != height-1)
+            {
+                height++;
+            }
             for(int i = count; i < count+childLimit;i++)
             {
-                Node<Integer> tmpNode = new Node<Integer>(i);
+                Node<Integer> tmpNode = new Node<Integer>(i,height);
                 node.addChild(tmpNode);
                 stack.add(tmpNode);
             }
+          
             count+=childLimit;
         }
         return root;
