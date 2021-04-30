@@ -1,10 +1,8 @@
 package com;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Comparator;
-import java.util.Random;
 import java.util.ResourceBundle;
 
 import com.Queue.SimpleQueue;
@@ -191,7 +189,6 @@ public class PrimaryController {
  
         public static Node<Integer> generateTree(int childLimit, int maxNodes)
     {
-        Random rand = new Random();
         Node<Integer> root = new Node<Integer>(1,1);
         SimpleQueue<Node<Integer>> stack = new SimpleQueue<>();
         stack.add(root);

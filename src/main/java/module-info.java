@@ -2,7 +2,7 @@
 
 module com {
     requires javafx.fxml;
-    requires javafx.graphics;
+    requires transitive javafx.graphics;
     requires javafx.controls;
     requires java.desktop;
     requires java.xml.bind;

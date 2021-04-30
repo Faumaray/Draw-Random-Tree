@@ -12,7 +12,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
@@ -59,9 +58,9 @@ public class ChartController {
         ObservableList<XYChart.Data<Number, Number>> data = FXCollections.<XYChart.Data<Number, Number>>observableArrayList();
         for(Tree<Integer> tree : PrimaryController.trees)
         {
-            data.add(new XYChart.Data(tree.size(), tree.getAlpha()));
+            data.add(new XYChart.Data<Number,Number>(tree.size(), tree.getAlpha()));
         }
-        XYChart.Series series = new XYChart.Series(data);
+        XYChart.Series<Number,Number> series = new XYChart.Series<Number,Number>(data);
         chart.getData().add(series);
         chart.setCreateSymbols(false);
         chart.autosize();
