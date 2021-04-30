@@ -63,7 +63,7 @@ public class PrimaryController {
     @FXML
     void gotoMath(ActionEvent event) throws IOException 
     {
-        if(trees == null)
+        if(trees.isEmpty())
         {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Alert");
@@ -110,7 +110,7 @@ public class PrimaryController {
 
     @FXML
     void goToAlpha(ActionEvent event) throws IOException {
-        if(trees == null)
+        if(trees.isEmpty())
         {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Alert");
@@ -130,16 +130,27 @@ public class PrimaryController {
         }
     }
     @FXML
-    void goToTreeAndHisto(ActionEvent event) throws IOException {
-        trees.sort(comparator);
-        Stage stage;
-        Scene scene;
-        stage = (Stage) goToTreeAndHisto.getScene().getWindow();
-        scene = FXMLLoader.load(getClass().getResource("TreeAndHist.fxml"));
-        stage.setScene(scene);
-        stage.setTitle("Дерево и Гистограмма");
-        stage.setMaximized(true);
-        stage.show();
+    void goToTreeAndHisto(ActionEvent event) throws IOException 
+    {
+        if(trees.isEmpty())
+        {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Alert");
+            alert.setHeaderText("Нет данных для отображения!");
+            alert.setContentText("Сгенерируйте деревья!");
+            alert.showAndWait();
+        }
+        else {
+            trees.sort(comparator);
+            Stage stage;
+            Scene scene;
+            stage = (Stage) goToTreeAndHisto.getScene().getWindow();
+            scene = FXMLLoader.load(getClass().getResource("TreeAndHist.fxml"));
+            stage.setScene(scene);
+            stage.setTitle("Дерево и Гистограмма");
+            stage.setMaximized(true);
+            stage.show();
+        }
     }
     @FXML
     void initialize() 
